@@ -1,0 +1,25 @@
+# Deployment configuration for Event Manager
+# This file can be used with various deployment platforms
+
+version: '3.8'
+
+services:
+  event-manager-frontend:
+    image: ghcr.io/YOUR_USERNAME/YOUR_REPO:latest
+    container_name: event-manager-frontend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.event-manager.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.event-manager.tls=true"
+      - "traefik.http.routers.event-manager.tls.certresolver=letsencrypt"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

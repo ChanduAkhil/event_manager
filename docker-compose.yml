@@ -1,0 +1,10 @@
+services:
+  # React Frontend
+  frontend:
+    build:
+      context: ./event-manager frontend
+      dockerfile: Dockerfile
+    container_name: event-manager-frontend
+    ports:
+      - "3000:80"
+    restart: unless-stopped

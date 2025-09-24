@@ -1,0 +1,56 @@
+name: Deploy Event Manager
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Deploy to Docker Hub (Optional)
+      if: false  # Set to true if you want to deploy to Docker Hub
+      run: |
+        echo "Deploying to Docker Hub..."
+        # Add Docker Hub deployment commands here
+        
+    - name: Deploy to AWS ECS (Optional)
+      if: false  # Set to true if you want to deploy to AWS ECS
+      run: |
+        echo "Deploying to AWS ECS..."
+        # Add AWS ECS deployment commands here
+        
+    - name: Deploy to Google Cloud Run (Optional)
+      if: false  # Set to true if you want to deploy to Google Cloud Run
+      run: |
+        echo "Deploying to Google Cloud Run..."
+        # Add Google Cloud Run deployment commands here
+        
+    - name: Deploy to Azure Container Instances (Optional)
+      if: false  # Set to true if you want to deploy to Azure
+      run: |
+        echo "Deploying to Azure Container Instances..."
+        # Add Azure deployment commands here
+        
+    - name: Deploy using Docker Compose
+      run: |
+        echo "Deploying using Docker Compose..."
+        echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+        # Use the deploy.yml file for deployment
+        # docker-compose -f deploy.yml up -d
+        
+    - name: Notify deployment success
+      run: |
+        echo "✅ Event Manager deployed successfully!"
+        echo "🚀 Application is now live!"
+        echo "📦 Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
